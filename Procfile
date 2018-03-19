@@ -1,1 +1,1 @@
-web: java -cp $JAVA_OPTS target/classes/com/codecool/enterprise/RatingMicroserviceApplication
+web: java -cp target/classes/com/codecool/enterprise/RatingMicroserviceApplication
