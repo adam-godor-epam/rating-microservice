@@ -1,1 +1,1 @@
-web: java -cp app.jar com.codecool.enterprise.RatingMicroserviceApplication
+web: java -jar target/RatingMicroService-1.0.jar
