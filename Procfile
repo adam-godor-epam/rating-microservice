@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/RatingMicroserviceApplication-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar target/RatingMicroService-1.0-SNAPSHOT.jar
