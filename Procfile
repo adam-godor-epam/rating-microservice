@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* RatingMicroService
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* RatingMicroserviceApplication
