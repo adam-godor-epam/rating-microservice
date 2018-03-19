@@ -11,8 +11,6 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.8.RELEASE</version>
     </parent>
-
-
     <properties>
         <version.java>1.8</version.java>
         <version.eclipselink>2.6.2</version.eclipselink>

@@ -1,1 +1,1 @@
-web java -Dserver.port=5000 -jar target/RatingMicroService-1.0-SNAPSHOT.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* RatingMicroService
