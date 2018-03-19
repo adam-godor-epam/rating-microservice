@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/RatingMicroService-1.0-SNAPSHOT.jar
+web: java -cp app.jar com.codecool.enterprise.RatingMicroserviceApplication
