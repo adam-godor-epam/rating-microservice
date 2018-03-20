@@ -5,6 +5,7 @@ import com.codecool.enterprise.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -21,8 +22,9 @@ public class RatingService {
         return ratingRepository.findAllBySellerId(sellerId);
     }
 
-    public float getAverageRatingBySellerId(int sellerId) {
-        return ratingRepository.getAverageRatingBySellerId(sellerId);
+    public String getAverageRatingBySellerId(int sellerId) {
+        DecimalFormat df = new DecimalFormat("#.0");
+        return df.format(ratingRepository.getAverageRatingBySellerId(sellerId));
     }
 
     public int getRatingCountBySellerId(int sellerId) {

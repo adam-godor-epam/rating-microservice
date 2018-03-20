@@ -28,11 +28,10 @@ public class Rating {
 
     private String review;
 
-    public Rating() {
+    private Rating() {
     }
 
-    public Rating(int id, int sellerId, int buyerId, int productId, int stars, String review) {
-        this.id = id;
+    public Rating(int sellerId, int buyerId, int productId, int stars, String review) {
         this.sellerId = sellerId;
         this.buyerId = buyerId;
         this.productId = productId;
