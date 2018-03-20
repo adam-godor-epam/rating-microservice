@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/RatingMicroservice-1.0-SNAPSHOT
+web: java -jar target/RatingMicroService-1.0.jar
