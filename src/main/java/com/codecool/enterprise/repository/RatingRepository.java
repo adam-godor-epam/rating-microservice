@@ -14,6 +14,6 @@ public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
     public int countAllBySellerId(int sellerId);
 
-    @Query("SELECT AVG(stars) FROM rating WHERE sellerId=:sellerId")
+    @Query("SELECT AVG(stars) FROM Rating WHERE seller_id=:sellerId")
     public float getAverageRatingBySellerId(@Param("sellerId") int sellerId);
 }
