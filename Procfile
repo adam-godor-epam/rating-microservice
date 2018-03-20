@@ -1,1 +1,1 @@
-web: java -jar target/RatingMicroService-1.0
+web: java -jar target/RatingMicroService-1.0-SNAPSHOT
