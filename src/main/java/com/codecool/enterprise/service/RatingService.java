@@ -23,8 +23,12 @@ public class RatingService {
     }
 
     public String getAverageRatingBySellerId(int sellerId) {
-        DecimalFormat df = new DecimalFormat("#.0");
-        return df.format(ratingRepository.getAverageRatingBySellerId(sellerId));
+        if (ratingRepository.getAverageRatingBySellerId(sellerId) == null) {
+            return "No ratings yet...";
+        } else {
+            DecimalFormat df = new DecimalFormat("#.0");
+            return df.format(ratingRepository.getAverageRatingBySellerId(sellerId));
+        }
     }
 
     public int getRatingCountBySellerId(int sellerId) {
