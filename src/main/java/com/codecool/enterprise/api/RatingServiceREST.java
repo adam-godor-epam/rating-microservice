@@ -2,21 +2,17 @@ package com.codecool.enterprise.api;
 
 import com.codecool.enterprise.model.Rating;
 import com.codecool.enterprise.service.RatingService;
-import com.google.gson.Gson;
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.RestClientException;
-
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 public class RatingServiceREST {
-
     private RatingService ratingService;
 
     public RatingServiceREST(RatingService ratingService) {
@@ -26,7 +22,24 @@ public class RatingServiceREST {
     @GetMapping("/rating/user/{id}")
     public ResponseEntity<List<Rating>> getAllUserRatings(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("ratingList", ratingService.getRatingsBySellerId(id));
+        JSONArray jsonArray = new JSONArray();
+
+        List<Rating> userRatings = ratingService.getRatingsBySellerId(id);
+
+        for (Rating rating: userRatings) {
+            JSONObject rateObj = new JSONObject();
+            rateObj.put("id", rating.getId());
+            rateObj.put("sellerId", rating.getSellerId());
+            rateObj.put("buyerId", rating.getBuyerId());
+            rateObj.put("productId", rating.getProductId());
+            rateObj.put("stars", rating.getStars());
+            rateObj.put("review", rating.getReview());
+
+            jsonArray.add(rateObj);
+        }
+
+        jsonObject.put("ratingList", jsonArray);
+
         return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
