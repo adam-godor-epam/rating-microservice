@@ -39,4 +39,38 @@ public class Rating {
         this.stars = stars;
         this.review = review;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public int getBuyerId() {
+        return buyerId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", sellerId=" + sellerId +
+                ", buyerId=" + buyerId +
+                ", productId=" + productId +
+                ", stars=" + stars +
+                ", review='" + review;
+    }
 }
