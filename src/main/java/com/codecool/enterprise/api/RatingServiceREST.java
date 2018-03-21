@@ -6,7 +6,9 @@ import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,9 @@ public class RatingServiceREST {
 
     @GetMapping("/rating/user/{id}")
     public ResponseEntity<List<Rating>> getAllUserRatings(@PathVariable("id") int id) {
-        return new ResponseEntity(ratingService.getRatingsBySellerId(id), HttpStatus.OK);
+        JSONObject ratings = new JSONObject();
+        ratings.put("ratingList", ratingService.getRatingsBySellerId(id));
+        return new ResponseEntity(ratings, HttpStatus.OK);
     }
 
     @GetMapping("/rating/user/{id}/avg")
@@ -36,6 +40,23 @@ public class RatingServiceREST {
         JSONObject avg = new JSONObject();
         avg.put("count", ratingService.getRatingCountBySellerId(id));
         return new ResponseEntity(avg, HttpStatus.OK);
+    }
+
+    @PostMapping("/rating")
+    public HttpStatus saveRating(HttpServletRequest req){
+        try{
+            int sellerId = Integer.parseInt(req.getParameter("sellerId"));
+            int buyerId = Integer.parseInt(req.getParameter("buyerId"));
+            int productId = Integer.parseInt(req.getParameter("productId"));
+            int stars = Integer.parseInt(req.getParameter("stars"));
+            String review = req.getParameter("review");
+            Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
+            ratingService.saveRating(rating);
+            return HttpStatus.OK;
+        } catch (NumberFormatException e){
+            return HttpStatus.BAD_REQUEST;
+        }
+
     }
 
 }
