@@ -1,7 +1,6 @@
 package com.codecool.enterprise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,6 +9,7 @@ import javax.validation.constraints.NotNull;
 public class Rating {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
@@ -19,6 +19,7 @@ public class Rating {
     private int buyerId;
 
     @NotNull
+    @Column(unique = true)
     private int productId;
 
     @NotNull
