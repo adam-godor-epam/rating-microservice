@@ -22,24 +22,9 @@ public class RatingServiceREST {
     @GetMapping("/rating/user/{id}")
     public ResponseEntity<List<Rating>> getAllUserRatings(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-
         List<Rating> userRatings = ratingService.getRatingsBySellerId(id);
-
-        for (Rating rating: userRatings) {
-            JSONObject rateObj = new JSONObject();
-            rateObj.put("id", rating.getId());
-            rateObj.put("sellerId", rating.getSellerId());
-            rateObj.put("buyerId", rating.getBuyerId());
-            rateObj.put("productId", rating.getProductId());
-            rateObj.put("stars", rating.getStars());
-            rateObj.put("review", rating.getReview());
-
-            jsonArray.add(rateObj);
-        }
-
+        JSONArray jsonArray = createRatingJsonArray(userRatings);
         jsonObject.put("ratingList", jsonArray);
-
         return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
@@ -56,29 +41,6 @@ public class RatingServiceREST {
         jsonObject.put("count", ratingService.getRatingCountBySellerId(id));
         return new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
     }
-/*
-    @PostMapping("/rating")
-    public ResponseEntity saveUserRate() {
-        String inputString;
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            inputString = restTemplate.getForEntity(inputUrl, String.class).getBody();
-        } catch (RestClientException e) {
-            System.out.println("Provider API is not running");
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        }
-        Gson input = new Gson();
-        input.toJson(inputString);
-
-        Rating rating = new Rating(input.fromJson("sellerId", int.class),
-                input.fromJson("buyerId", int.class),
-                input.fromJson("productId", int.class),
-                input.fromJson("stars", int.class),
-                input.fromJson("review", String.class));
-        ratingService.saveRating(rating);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
 
     @PostMapping("/rating")
     public HttpStatus saveRating(HttpServletRequest req){
@@ -86,7 +48,7 @@ public class RatingServiceREST {
             int sellerId = Integer.parseInt(req.getParameter("sellerId"));
             int buyerId = Integer.parseInt(req.getParameter("buyerId"));
             int productId = Integer.parseInt(req.getParameter("productId")); // TODO check if prod exists and throw error
-            int stars = Integer.parseInt(req.getParameter("stars"));
+            int stars = Integer.parseInt(req.getParameter("stars"));  //TODO check if mot 1-5
             String review = req.getParameter("review");
             Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
             ratingService.saveRating(rating);
@@ -95,6 +57,22 @@ public class RatingServiceREST {
             return HttpStatus.BAD_REQUEST;
         }
 
+    }
+
+    private JSONArray createRatingJsonArray(List<Rating> userRatings) {
+        JSONArray jsonArray = new JSONArray();
+        for (Rating rating : userRatings) {
+            JSONObject rateObj = new JSONObject();
+            rateObj.put("id", rating.getId());
+            rateObj.put("sellerId", rating.getSellerId());
+            rateObj.put("buyerId", rating.getBuyerId());
+            rateObj.put("productId", rating.getProductId());
+            rateObj.put("stars", rating.getStars());
+            rateObj.put("review", rating.getReview());
+
+            jsonArray.add(rateObj);
+        }
+        return jsonArray;
     }
 
 }
