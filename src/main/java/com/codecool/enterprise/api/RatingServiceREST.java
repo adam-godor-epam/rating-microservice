@@ -32,18 +32,18 @@ public class RatingServiceREST {
     public ResponseEntity getUserRateAvg(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("avg", ratingService.getAverageRatingBySellerId(id));
-        return new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
+        return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
     @GetMapping("/rating/user/{id}/count")
     public ResponseEntity getUserRateCount(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("count", ratingService.getRatingCountBySellerId(id));
-        return new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
+        return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
     @PostMapping("/rating")
-    public HttpStatus saveRating(HttpServletRequest req){
+    public ResponseEntity saveRating(HttpServletRequest req){
         try{
             int sellerId = Integer.parseInt(req.getParameter("sellerId"));
             int buyerId = Integer.parseInt(req.getParameter("buyerId"));
@@ -52,11 +52,10 @@ public class RatingServiceREST {
             String review = req.getParameter("review");
             Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
             ratingService.saveRating(rating);
-            return HttpStatus.OK;
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NumberFormatException e){
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     private JSONArray createRatingJsonArray(List<Rating> userRatings) {
