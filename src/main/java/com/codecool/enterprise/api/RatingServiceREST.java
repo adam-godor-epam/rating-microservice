@@ -47,12 +47,24 @@ public class RatingServiceREST {
         try{
             int sellerId = Integer.parseInt(req.getParameter("sellerId"));
             int buyerId = Integer.parseInt(req.getParameter("buyerId"));
-            int productId = Integer.parseInt(req.getParameter("productId")); // TODO check if prod exists and throw error
-            int stars = Integer.parseInt(req.getParameter("stars"));  //TODO check if mot 1-5
+            int productId = Integer.parseInt(req.getParameter("productId"));
+            int stars = Integer.parseInt(req.getParameter("stars"));
             String review = req.getParameter("review");
-            Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
-            ratingService.saveRating(rating);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+            String errorMessage = "product is already taken";
+            boolean starsValid = true;
+            if(!ratingService.starsValid(stars)) {
+                starsValid = false;
+                errorMessage = "the rating has to be between 1-5";
+            }
+
+            if (ratingService.getRatingByProductId(productId) == null && starsValid) {
+                Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
+                ratingService.saveRating(rating);
+                return ResponseEntity.status(HttpStatus.OK).body(null);
+            } else {
+                return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
+            }
+
         } catch (NumberFormatException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

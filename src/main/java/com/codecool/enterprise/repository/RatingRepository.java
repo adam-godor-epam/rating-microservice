@@ -10,6 +10,8 @@ import java.util.List;
 
 
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
+    public Rating findRatingByProductId(int productId);
+
     public List<Rating> findAllBySellerId(int sellerId);
 
     public int countAllBySellerId(int sellerId);

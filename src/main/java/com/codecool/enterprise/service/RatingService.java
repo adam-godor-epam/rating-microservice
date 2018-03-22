@@ -34,4 +34,12 @@ public class RatingService {
     public int getRatingCountBySellerId(int sellerId) {
         return ratingRepository.countAllBySellerId(sellerId);
     }
+
+    public Rating getRatingByProductId(int productId) {
+        return ratingRepository.findRatingByProductId(productId);
+    }
+
+    public boolean starsValid(int stars) {
+        return stars > 0 && stars < 6;
+    }
 }
