@@ -43,7 +43,7 @@ public class RatingServiceREST {
     }
 
     @PostMapping("/rating")
-    public HttpStatus saveRating(HttpServletRequest req){
+    public ResponseEntity saveRating(HttpServletRequest req){
         try{
             int sellerId = Integer.parseInt(req.getParameter("sellerId"));
             int buyerId = Integer.parseInt(req.getParameter("buyerId"));
@@ -52,11 +52,10 @@ public class RatingServiceREST {
             String review = req.getParameter("review");
             Rating rating = new Rating(sellerId, buyerId, productId, stars, review);
             ratingService.saveRating(rating);
-            return HttpStatus.OK;
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NumberFormatException e){
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     private JSONArray createRatingJsonArray(List<Rating> userRatings) {
