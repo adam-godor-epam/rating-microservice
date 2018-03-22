@@ -34,4 +34,8 @@ public class RatingService {
     public int getRatingCountBySellerId(int sellerId) {
         return ratingRepository.countAllBySellerId(sellerId);
     }
+
+    public Rating getRatingByProductId(int productId) {
+        return ratingRepository.findRatingByProductId(productId);
+    }
 }
