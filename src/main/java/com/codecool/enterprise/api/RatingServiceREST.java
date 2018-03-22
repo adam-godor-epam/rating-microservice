@@ -32,14 +32,14 @@ public class RatingServiceREST {
     public ResponseEntity getUserRateAvg(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("avg", ratingService.getAverageRatingBySellerId(id));
-        return new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
+        return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
     @GetMapping("/rating/user/{id}/count")
     public ResponseEntity getUserRateCount(@PathVariable("id") int id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("count", ratingService.getRatingCountBySellerId(id));
-        return new ResponseEntity(jsonObject.toString(), HttpStatus.OK);
+        return new ResponseEntity(jsonObject, HttpStatus.OK);
     }
 
     @PostMapping("/rating")
