@@ -38,4 +38,8 @@ public class RatingService {
     public Rating getRatingByProductId(int productId) {
         return ratingRepository.findRatingByProductId(productId);
     }
+
+    public boolean starsValid(int stars) {
+        return stars > 0 && stars < 6;
+    }
 }
